@@ -1,0 +1,17 @@
+[
+  {
+    "path": "posts/welcome/",
+    "title": "Welcome to Island Economist",
+    "description": "Welcome to our new blog, Island Economist. We hope you enjoy \nreading what we have to say!",
+    "author": [
+      {
+        "name": "a",
+        "url": "a"
+      }
+    ],
+    "date": "2019-11-22",
+    "categories": [],
+    "preview": {},
+    "last_modified": "2019-11-22T20:31:14+11:00"
+  }
+]
