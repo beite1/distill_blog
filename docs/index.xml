@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+  <channel>
+    <title>Island Economist</title>
+    <link>https://www.islandeconomist.com</link>
+    <atom:link href="https://www.islandeconomist.com/index.xml" rel="self" type="application/rss+xml"/>
+    <description>Island Economist
+</description>
+    <generator>Distill</generator>
+    <lastBuildDate>Mon, 25 Nov 2019 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>So you want to be an ODI Fellow</title>
+      <link>https://www.islandeconomist.com/posts/2019-11-26-so-you-want-to-be-fellow</link>
+      <description>An analysis of the data (part 1)</description>
+      <guid>https://www.islandeconomist.com/posts/2019-11-26-so-you-want-to-be-fellow</guid>
+      <pubDate>Mon, 25 Nov 2019 00:00:00 +0000</pubDate>
+      <media:content url="https://www.islandeconomist.com/posts/2019-11-26-so-you-want-to-be-fellow/so-you-want-to-be-fellow_files/figure-html5/unnamed-chunk-1-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
+    <item>
+      <title>Welcome to Island Economist</title>
+      <dc:creator>a</dc:creator>
+      <link>https://www.islandeconomist.com/posts/welcome</link>
+      <description>Welcome to our new blog, Island Economist. We hope you enjoy 
+reading what we have to say!</description>
+      <guid>https://www.islandeconomist.com/posts/welcome</guid>
+      <pubDate>Fri, 22 Nov 2019 00:00:00 +0000</pubDate>
+    </item>
+  </channel>
+</rss>

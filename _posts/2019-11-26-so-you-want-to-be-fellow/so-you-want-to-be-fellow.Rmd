@@ -1,0 +1,188 @@
+---
+title: "So you want to be an ODI Fellow"
+description: "An analysis of the data (part 1)"
+date: 11-26-2019
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+I was an ODI Fellow between 2012-2014, which were two incredible years. I couldn't recommend the program more, though this opinion is not shared by all ex-Fellows. The inspiration for this blog post comes from one I read looking at the skills and backgrounds of data scientist. This blog does something similar for ODI Fellows.
+
+This will be the first of two posts. Here I examine what Fellows did prior to their Fellowship; what did they study and what work experience did they have. The second will focus on what Fellows did afterwards; what jobs did they get and in what organisations.
+
+Getting an ODI Fellowship is competitive. Every year there are about 50 places, in 2017 and 2018 there were 795 and 749 applicants respectively. This is an acceptance rate of about 6-7%. This is lower than for undergraduate study at Oxford, about 15%, and similar to Yale and Princeton, about 6.5%. None the less, in terms of applications, the Fellowship is less competitive than programs such as the World Bank YPP, which has an acceptance rate of less than 1%.
+
+<h1>The data</h1>
+
+Throughout I rely in publicly(-ish) avaliable data. The two data sources are the ODI Fellowship handbooks produced every year by ODI and data on individuals from LinkedIn. I wrote code to largely automate the data acquisition process, though such methods are not without [controversy](https://reason.com/2019/09/09/scraping-a-public-website-doesnt-violate-the-cfaa-ninth-circuit-mostly-holds/). 
+
+The Fellowship handbooks identify 419 individuals starting a Fellowship between 2011 and 2019. However, my web scrapper only pulled in data for 391  and my cleaning script only identified 242 of these having started a Fellowship. The majority of this analysis is on these 242 individuals. 
+
+<aside>
+Each LinkedIn profile has multiple "records". My script identified the records most likely to be the ODI Fellowship. Where no such record could be found I dropped the individual from further analysis. 
+</aside>
+
+<h1>What should I study?</h1>
+
+The ODI Fellowship handbooks provide data on the universities attended by Fellows typically for their masters. There are 82 universities represented in total. However, 68% of Fellows studied at just ten universities. The graph below shows the number of Fellows from the top 16 universities as well as showing the relative dominance of just three; LSE, Oxford and SOAS. 
+
+```{r}
+library(ggplot2)
+library(dplyr)
+
+CompleteData <- read.csv("C:\\Users\\Benjamin\\Desktop\\Blog\\Analyst\\ODI project\\CompleteScrape.csv", header = TRUE, stringsAsFactors = FALSE)
+University <- CompleteData %>% group_by(University) %>% summarise(Uni = n()) %>% arrange(desc(Uni)) %>% as.data.frame()
+University <- top_n(University, 15, Uni)
+University <- filter(University, University != "")
+
+ggplot(University) + geom_col(aes(x=reorder(University,-Uni),y=Uni))  + xlab("Years of experience") + theme_bw() + theme(panel.border = element_blank(), axis.title.x=element_blank()) + theme(axis.text.x = element_text(angle = 90)) + ylab("Number")
+
+
+```
+
+If you are considering where to do your masters and really want a Fellowship, then you should study at LSE, Oxford or SOAS. 
+
+While a masters is neccesary only 1.5% of Fellows had completed their PHD prior to starting their ODI Fellowship. Individuals with PHDs either don't apply or don't get accepeted, either way if you are currently completing or have a PHD then successfully applying for an ODI Fellowship would put you in the minority. 
+
+<h1>What did Fellows study at Bachelors?</h1>
+
+The table below shows the field of study for bachelor's degrees obtained by Fellows. The vast majority of Fellows did straight Economics or Economics combined with something else (e.g. 'Economics and Politics' or 'Economics with Finance').
+
+```{r, layout="l-body-outset"}
+library(knitr)
+
+subjectName <- c("Economics", "Economics and", "Other", "PPE", "Development Studies", "Development Economics", "Statistics")
+Perc <- c("43%", "36%", "10%", "7%", "2%", "1%", "1%")
+
+SubjectData <- as.data.frame(matrix(c(subjectName, Perc), ncol = 2, nrow = 7))
+colnames(SubjectData) <- c("Subject", "Percentage")
+
+kable(SubjectData)
+```
+
+<h1>What did Fellows study at masters?</h1>
+
+There were a wider diversity of master's course titles, I have encoded these slightly differently. Straight Economics masters and Development Economics are the majority.
+
+```{r, layout="l-body-outset"}
+library(knitr)
+
+subjectNameM <- c("Development Economics", "Economics", "Economics Other", "Development", "Other", "Health Economics", "Econometrics")
+PercM <- c("33%", "30%", "14%", "10%", "10%", "3%", "1%")
+
+SubjectDataM <- as.data.frame(matrix(c(subjectNameM, PercM), ncol = 2, nrow = 7))
+colnames(SubjectDataM) <- c("Subject", "Percentage")
+
+kable(SubjectDataM)
+```
+
+<h1>What grades did they get</h1>
+
+In general, people don't list the grades they achieved when studying, 52% don't list a grade for bachelors while for masters this is 62%. There is likely to be some selection bias here, where those that choose to list their grade having achieved top marks. While those that merely achieved a 2:1 (like myself) choosing not to list their grade. In some cases, I was unable to determine the meaning of the grade listed.
+
+<h2>Bachelors</h2>
+
+```{r, layout="l-body-outset"}
+library(knitr)
+
+BName <- c("Missing", "First", "2:1", "Unknown")
+BPerc <- c("52%", "28%", "12%", "8%")
+
+Bgrade <- as.data.frame(matrix(c(BName, BPerc), ncol = 2, nrow = 4))
+colnames(Bgrade) <- c("Grade", "Percentage")
+
+kable(Bgrade)
+```
+
+<h2>Masters</h2>
+
+```{r, layout="l-body-outset"}
+library(knitr)
+
+MName <- c("Missing", "Distinction", "Unknown", "Merit")
+MPerc <- c("62%", "27%", "7%", "4%")
+
+Mgrade <- as.data.frame(matrix(c(MName, MPerc), ncol = 2, nrow = 4))
+colnames(Mgrade) <- c("Subject", "Percentage")
+
+kable(Mgrade)
+```
+
+<h1>Do I need work experience?</h1>
+
+In short, not necessarily. Apart from internships (and some waitering) I did not have any work experience to speak of when I applied, nor do I list any work experience prior to my Fellowship on my LinkedIn. That puts me in a minority, only 11 (5%) of individuals list no work experience on their LinkedIn profile prior to their Fellowship. 
+
+The histogram below shows the amount of work experience prior to starting a Fellowship. The mean amount of work experience reported was 2.7 years and the median 2.2 years, suggesting that ODI's description of the scheme as picking "early career" economists is accurate. 
+
+```{r}
+library(ggplot2)
+
+XPYears <- read.csv("C:\\Users\\Benjamin\\Desktop\\Blog\\Analyst\\ODI project\\ExpYearsS1.csv", header = TRUE, stringsAsFactors = FALSE)
+
+ggplot(data = XPYears) + geom_histogram(aes(TotalYearsMinusDiff), binwidth =  1, boundary = 0) + 
+  coord_cartesian( ylim=c(0, 65), expand = 0) + ylab("") + xlab("Years of experience") +
+  theme_bw() + theme(panel.border = element_blank())
+```
+
+<h1>What were people doing immediately prior to their Fellowship?</h1>
+
+The majority, 63%, were working while the remaining 37% report being in education. Of those in education every single person was completing their master's degree, no one reported to have completed their PHD immediately prior to starting a Fellowship. The interactive map below shows where Fellows were immediately prior to their Fellowship. 
+
+<aside>
+Location listed was geocoded using the Google API. Sometimes this wasn't very specific, such as “Australia”, which geocodes to the centre of Australia. 
+</aside>
+
+
+```{r}
+library(leaflet)
+
+Location <- read.csv("C:\\Users\\Benjamin\\Desktop\\Blog\\Analyst\\ODI project\\LocationData.csv", header = TRUE, stringsAsFactors = FALSE)
+
+m <- leaflet() %>%
+  addProviderTiles(providers$CartoDB) %>%  # Add default OpenStreetMap map tiles
+  addCircleMarkers(Location$lon, Location$lat, stroke = FALSE, clusterOptions = markerClusterOptions(showCoverageOnHover = FALSE))
+m  # Print the map
+
+```
+
+<h1>Where were Fellow's working immediately prior to their Fellowship?</h1>
+
+Categorising the large variety of titles and workplaces took a bit of judgement. The most common job title was "Consultant", but this was only used by 7% of people. Variations on "Consultant" such as "Economic Consultant" made up 19%. I have also included some examples of the job titles captured under each category.
+
+<h2>Job titles</h2>
+
+```{r, layout="l-body-outset"}
+library(knitr)
+
+WorkName <- c("Researcher", "Consultant", "Economist", "Analyst", "Other", "Policy Advisor", "Intern", "Project Manager/Assistant", "Statistician")
+WorkPerc <- c("27%", "19%", "14%", "11%", "10%", "6%", "6%", "5%", "1%")
+WorkEx <- c("Includes: Researcher, Research Assistant, Research Fellow, Research Officer and derivatives", "Includes: Consultant, Economic Consultant, Short term consultant and derivatives", "Includes: Economist, Assistant Economist and derivatives", "Includes: Analyst, Research Analyst, Financial Analyst and derivatives", "", "Includes: Policy Advisor, Policy Officer and derivatives", "", "Includes Project Manager, Process Manager, Project leader, Project assistant and derivatives", "")
+
+WorkSum <- as.data.frame(matrix(c(WorkName, WorkPerc, WorkEx), ncol = 3, nrow = 9))
+colnames(WorkSum) <- c("Category", "Percentage", "Examples")
+
+kable(WorkSum)
+```
+
+<h2>Workplaces</h2>
+
+```{r, layout="l-body-outset"}
+library(knitr)
+
+WorkPlace <- c("Private sector", "University", "Charity and non-profit", "International public sector", "UK Government", "Other Government")
+WorkPerc <- c("22%","20%", "19%", "17%", "13%", "9%")
+
+WorkSum <- as.data.frame(matrix(c(WorkPlace, WorkPerc), ncol = 2, nrow = 6))
+colnames(WorkSum) <- c("Work place", "Percentage")
+
+kable(WorkSum)
+```
+
+<h1>Next time</h1>
+
+Join me next time when I look at whether Fellows quit early, what jobs they get after their postings and in what organisations. 
