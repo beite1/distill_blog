@@ -21,113 +21,11 @@ Getting an ODI Fellowship is competitive. Every year there are about 50 places, 
 
 Throughout I rely in publicly(-ish) avaliable data. The two data sources are the ODI Fellowship handbooks produced every year by ODI and data on individuals from LinkedIn. I wrote code to largely automate the data acquisition process, though such methods are not without [controversy](https://reason.com/2019/09/09/scraping-a-public-website-doesnt-violate-the-cfaa-ninth-circuit-mostly-holds/). 
 
-The Fellowship handbooks identify 419 individuals starting a Fellowship between 2011 and 2019. However, my web scrapper only pulled in data for 391  and my cleaning script only identified 242 of these having started a Fellowship. The majority of this analysis is on these 242 individuals. 
-
 <aside>
 Each LinkedIn profile has multiple "records". My script identified the records most likely to be the ODI Fellowship. Where no such record could be found I dropped the individual from further analysis. 
 </aside>
 
-<h1>What should I study?</h1>
-
-The ODI Fellowship handbooks provide data on the universities attended by Fellows typically for their masters. There are 82 universities represented in total. However, 68% of Fellows studied at just ten universities. The graph below shows the number of Fellows from the top 16 universities as well as showing the relative dominance of just three; LSE, Oxford and SOAS. 
-
-```{r}
-library(ggplot2)
-library(dplyr)
-
-CompleteData <- read.csv("C:\\Users\\Benjamin\\Desktop\\Blog\\Analyst\\ODI project\\CompleteScrape.csv", header = TRUE, stringsAsFactors = FALSE)
-University <- CompleteData %>% group_by(University) %>% summarise(Uni = n()) %>% arrange(desc(Uni)) %>% as.data.frame()
-University <- top_n(University, 15, Uni)
-University <- filter(University, University != "")
-
-ggplot(University) + geom_col(aes(x=reorder(University,-Uni),y=Uni))  + xlab("Years of experience") + theme_bw() + theme(panel.border = element_blank(), axis.title.x=element_blank()) + theme(axis.text.x = element_text(angle = 90)) + ylab("Number")
-
-
-```
-
-If you are considering where to do your masters and really want a Fellowship, then you should study at LSE, Oxford or SOAS. 
-
-While a masters is neccesary only 1.5% of Fellows had completed their PHD prior to starting their ODI Fellowship. Individuals with PHDs either don't apply or don't get accepeted, either way if you are currently completing or have a PHD then successfully applying for an ODI Fellowship would put you in the minority. 
-
-<h1>What did Fellows study at Bachelors?</h1>
-
-The table below shows the field of study for bachelor's degrees obtained by Fellows. The vast majority of Fellows did straight Economics or Economics combined with something else (e.g. 'Economics and Politics' or 'Economics with Finance').
-
-```{r, layout="l-body-outset"}
-library(knitr)
-
-subjectName <- c("Economics", "Economics and", "Other", "PPE", "Development Studies", "Development Economics", "Statistics")
-Perc <- c("43%", "36%", "10%", "7%", "2%", "1%", "1%")
-
-SubjectData <- as.data.frame(matrix(c(subjectName, Perc), ncol = 2, nrow = 7))
-colnames(SubjectData) <- c("Subject", "Percentage")
-
-kable(SubjectData)
-```
-
-<h1>What did Fellows study at masters?</h1>
-
-There were a wider diversity of master's course titles, I have encoded these slightly differently. Straight Economics masters and Development Economics are the majority.
-
-```{r, layout="l-body-outset"}
-library(knitr)
-
-subjectNameM <- c("Development Economics", "Economics", "Economics Other", "Development", "Other", "Health Economics", "Econometrics")
-PercM <- c("33%", "30%", "14%", "10%", "10%", "3%", "1%")
-
-SubjectDataM <- as.data.frame(matrix(c(subjectNameM, PercM), ncol = 2, nrow = 7))
-colnames(SubjectDataM) <- c("Subject", "Percentage")
-
-kable(SubjectDataM)
-```
-
-<h1>What grades did they get</h1>
-
-In general, people don't list the grades they achieved when studying, 52% don't list a grade for bachelors while for masters this is 62%. There is likely to be some selection bias here, where those that choose to list their grade having achieved top marks. While those that merely achieved a 2:1 (like myself) choosing not to list their grade. In some cases, I was unable to determine the meaning of the grade listed.
-
-<h2>Bachelors</h2>
-
-```{r, layout="l-body-outset"}
-library(knitr)
-
-BName <- c("Missing", "First", "2:1", "Unknown")
-BPerc <- c("52%", "28%", "12%", "8%")
-
-Bgrade <- as.data.frame(matrix(c(BName, BPerc), ncol = 2, nrow = 4))
-colnames(Bgrade) <- c("Grade", "Percentage")
-
-kable(Bgrade)
-```
-
-<h2>Masters</h2>
-
-```{r, layout="l-body-outset"}
-library(knitr)
-
-MName <- c("Missing", "Distinction", "Unknown", "Merit")
-MPerc <- c("62%", "27%", "7%", "4%")
-
-Mgrade <- as.data.frame(matrix(c(MName, MPerc), ncol = 2, nrow = 4))
-colnames(Mgrade) <- c("Subject", "Percentage")
-
-kable(Mgrade)
-```
-
-<h1>Do I need work experience?</h1>
-
-In short, not necessarily. Apart from internships (and some waitering) I did not have any work experience to speak of when I applied, nor do I list any work experience prior to my Fellowship on my LinkedIn. That puts me in a minority, only 11 (5%) of individuals list no work experience on their LinkedIn profile prior to their Fellowship. 
-
-The histogram below shows the amount of work experience prior to starting a Fellowship. The mean amount of work experience reported was 2.7 years and the median 2.2 years, suggesting that ODI's description of the scheme as picking "early career" economists is accurate. 
-
-```{r}
-library(ggplot2)
-
-XPYears <- read.csv("C:\\Users\\Benjamin\\Desktop\\Blog\\Analyst\\ODI project\\ExpYearsS1.csv", header = TRUE, stringsAsFactors = FALSE)
-
-ggplot(data = XPYears) + geom_histogram(aes(TotalYearsMinusDiff), binwidth =  1, boundary = 0) + 
-  coord_cartesian( ylim=c(0, 65), expand = 0) + ylab("") + xlab("Years of experience") +
-  theme_bw() + theme(panel.border = element_blank())
-```
+The Fellowship handbooks identify 419 individuals starting a Fellowship between 2011 and 2019. However, my web scrapper only pulled in data for 391  and my cleaning script only identified 242 of these having started a Fellowship. The majority of this analysis is on these 242 individuals. 
 
 <h1>What were people doing immediately prior to their Fellowship?</h1>
 
@@ -150,18 +48,168 @@ m  # Print the map
 
 ```
 
-<h1>Where were Fellow's working immediately prior to their Fellowship?</h1>
+<h1>Where did Fellows study?</h1>
+
+The ODI Fellowship handbooks provide data on the universities attended by Fellows typically for their masters. There are 82 universities represented in total. However, 68% of Fellows studied at just ten universities. The graph below shows the number of Fellows from the top 16 universities as well as showing the relative dominance of just three; LSE, Oxford and SOAS. 
+
+```{r}
+library(ggplot2)
+library(dplyr)
+
+CompleteData <- read.csv("C:\\Users\\Benjamin\\Desktop\\Blog\\Analyst\\ODI project\\CompleteScrape.csv", header = TRUE, stringsAsFactors = FALSE)
+University <- CompleteData %>% group_by(University) %>% summarise(Uni = n()) %>% arrange(desc(Uni)) %>% as.data.frame()
+University <- top_n(University, 15, Uni)
+University <- filter(University, University != "")
+
+ggplot(University) + geom_col(aes(x=reorder(University,-Uni),y=Uni))  + xlab("Years of experience") + theme_bw() + theme(panel.border = element_blank(), axis.title.x=element_blank()) + theme(axis.text.x = element_text(angle = 90)) + ylab("Number")
+
+
+```
+
+If you are considering where to do your masters and really want a Fellowship, then you should study at LSE, Oxford or SOAS. 
+
+While a masters is neccesary only 1.5% of Fellows had completed their PHD prior to starting their ODI Fellowship. Individuals with PHDs either don't apply or don't get accepeted, either way if you are currently completing or have a PHD then successfully applying for an ODI Fellowship would put you in the minority. 
+
+<h2>What did Fellows study?</h2>
+
+Most Fellows report what they studied both at Bachelors and at Masters, both of which I examine here. 
+
+<h3>Bachelors </h3>
+
+The graph below shows the field of study for bachelor's degrees obtained by Fellows. The vast majority of Fellows did straight Economics or Economics combined with something else (e.g. 'Economics and Politics' or 'Economics with Finance').
+
+```{r}
+library(knitr)
+library(ggplot2)
+library(plotly)
+
+subjectName <- c("Economics", "Economics and", "Other", "PPE", "Development Studies", "Development Economics", "Statistics")
+Perc <- c("43%", "36%", "10%", "7%", "2%", "1%", "1%")
+
+SubjectData <- as.data.frame(matrix(c(subjectName, Perc), ncol = 2, nrow = 7))
+colnames(SubjectData) <- c("Subject", "Percentage")
+
+ #kable(SubjectData)
+
+Perc <- c(0.43, 0.36, 0.10, 0.07,0.02, 0.01,0.01)
+
+SubjectData <- as.data.frame(matrix(c(subjectName, Perc), ncol = 2, nrow = 7))
+colnames(SubjectData) <- c("Subject", "Percentage")
+SubjectData$X <- 1
+
+G <- ggplot(SubjectData, aes(x = X, y = Percentage, fill = Subject)) + geom_col() +
+  coord_flip() +
+  theme(axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.y=element_blank(),
+        axis.ticks.x=element_blank(),
+        legend.position="bottom",
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line.y = element_line(color="black", size = 1)
+        ) + theme(legend.title = element_blank()) + scale_fill_brewer(palette = "Dark2")
+
+ggplotly(G, tooltip = c("Subject", "Percentage")) %>% layout(legend = list(orientation = "h", x = 0.0, y = -0.0)) 
+         
+```
+
+<h3>Masters</h3>
+
+There were a wider diversity of master's course titles, I have encoded these slightly differently. Straight Economics masters and Development Economics are the majority.
+
+```{r}
+library(knitr)
+
+subjectNameM <- c("Development Economics", "Economics", "Economics Other", "Development", "Other", "Health Economics", "Econometrics")
+PercM <- c("33%", "30%", "14%", "10%", "10%", "3%", "1%")
+PercM <- c(0.33, 0.30, 0.14, 0.10, 0.10, 0.03, 0.01)
+
+SubjectData <- as.data.frame(matrix(c(subjectNameM, PercM), ncol = 2, nrow = 7))
+colnames(SubjectData) <- c("Subject", "Percentage")
+SubjectData$X <- 1
+
+#kable(SubjectDataM)
+
+G <- ggplot(SubjectData, aes(x = X, y = Percentage, fill = Subject)) + geom_col() +
+  coord_flip() +
+  theme(axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.y=element_blank(),
+        axis.ticks.x=element_blank(),
+        legend.position="bottom",
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line.y = element_line(color="black", size = 1)
+        ) + theme(legend.title = element_blank()) + scale_fill_brewer(palette = "Dark2")
+
+ggplotly(G, tooltip = c("Subject", "Percentage")) %>% layout(legend = list(orientation = "h", x = 0.0, y = -0.0)) 
+
+
+```
+
+<h2>What grades did they get?</h2>
+
+In general, people don't list the grades they achieved when studying, 52% don't list a grade for bachelors while for masters this is 62%. There is likely to be some selection bias here, where those that choose to list their grade having achieved top marks. While those that merely achieved a 2:1 (like myself) choosing not to list their grade. In some cases, I was unable to determine the meaning of the grade listed.
+
+<h3>Bachelors</h3>
+
+```{r}
+library(knitr)
+
+BName <- c("Missing", "First", "2:1", "Unknown")
+BPerc <- c("52%", "28%", "12%", "8%")
+
+Bgrade <- as.data.frame(matrix(c(BName, BPerc), ncol = 2, nrow = 4))
+colnames(Bgrade) <- c("Grade", "Percentage")
+
+kable(Bgrade)
+```
+
+<h3>Masters</h3>
+
+```{r}
+library(knitr)
+
+MName <- c("Missing", "Distinction", "Unknown", "Merit")
+MPerc <- c("62%", "27%", "7%", "4%")
+
+Mgrade <- as.data.frame(matrix(c(MName, MPerc), ncol = 2, nrow = 4))
+colnames(Mgrade) <- c("Subject", "Percentage")
+
+kable(Mgrade)
+```
+
+<h1>Did Fellows report having work experience?</h1>
+
+In short, not all. Apart from internships (and some waitering) I did not have any work experience to speak of when I applied, nor do I list any work experience prior to my Fellowship on my LinkedIn. That puts me in a minority, only 11 (5%) of individuals list no work experience on their LinkedIn profile prior to their Fellowship. 
+
+The histogram below shows the amount of work experience prior to starting a Fellowship. The mean amount of work experience reported was 2.7 years and the median 2.2 years, suggesting that ODI's description of the scheme as picking "early career" economists is accurate. 
+
+```{r}
+library(ggplot2)
+
+XPYears <- read.csv("C:\\Users\\Benjamin\\Desktop\\Blog\\Analyst\\ODI project\\ExpYearsS1.csv", header = TRUE, stringsAsFactors = FALSE)
+
+ggplot(data = XPYears) + geom_histogram(aes(TotalYearsMinusDiff), binwidth =  1, boundary = 0) + 
+  coord_cartesian( ylim=c(0, 65), expand = 0) + ylab("") + xlab("Years of experience") +
+  theme_bw() + theme(panel.border = element_blank())
+```
+
+
+<h2>Where were Fellow's working immediately prior to their Fellowship?</h2>
 
 Categorising the large variety of titles and workplaces took a bit of judgement. The most common job title was "Consultant", but this was only used by 7% of people. Variations on "Consultant" such as "Economic Consultant" made up 19%. I have also included some examples of the job titles captured under each category.
 
-<h2>Job titles</h2>
+<h3>Job titles</h3>
 
-```{r, layout="l-body-outset"}
+```{r}
 library(knitr)
 
 WorkName <- c("Researcher", "Consultant", "Economist", "Analyst", "Other", "Policy Advisor", "Intern", "Project Manager/Assistant", "Statistician")
 WorkPerc <- c("27%", "19%", "14%", "11%", "10%", "6%", "6%", "5%", "1%")
-WorkEx <- c("Includes: Researcher, Research Assistant, Research Fellow, Research Officer and derivatives", "Includes: Consultant, Economic Consultant, Short term consultant and derivatives", "Includes: Economist, Assistant Economist and derivatives", "Includes: Analyst, Research Analyst, Financial Analyst and derivatives", "", "Includes: Policy Advisor, Policy Officer and derivatives", "", "Includes Project Manager, Process Manager, Project leader, Project assistant and derivatives", "")
+WorkEx <- c("Researcher, Research Assistant, Research Fellow, Research Officer", "Consultant, Economic Consultant, Short term consultant", "Economist, Assistant Economist", "Analyst, Research Analyst, Financial Analyst", "", "Policy Advisor, Policy Officer", "", "Project Manager, Process Manager, Project leader, Project assistant", "")
 
 WorkSum <- as.data.frame(matrix(c(WorkName, WorkPerc, WorkEx), ncol = 3, nrow = 9))
 colnames(WorkSum) <- c("Category", "Percentage", "Examples")
@@ -169,16 +217,16 @@ colnames(WorkSum) <- c("Category", "Percentage", "Examples")
 kable(WorkSum)
 ```
 
-<h2>Workplaces</h2>
+<h3>Workplaces</h3>
 
-```{r, layout="l-body-outset"}
+```{r}
 library(knitr)
 
 WorkPlace <- c("Private sector", "University", "Charity and non-profit", "International public sector", "UK Government", "Other Government")
 WorkPerc <- c("22%","20%", "19%", "17%", "13%", "9%")
 
 WorkSum <- as.data.frame(matrix(c(WorkPlace, WorkPerc), ncol = 2, nrow = 6))
-colnames(WorkSum) <- c("Work place", "Percentage")
+colnames(WorkSum) <- c("Workplace", "Percentage")
 
 kable(WorkSum)
 ```
