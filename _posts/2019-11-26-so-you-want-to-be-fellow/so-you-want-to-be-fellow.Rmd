@@ -1,5 +1,5 @@
 ---
-title: "So you want to be an ODI Fellow"
+title: "Tips for becoming an ODI Fellow"
 description: "An analysis of the data (part 1)"
 date: 11-26-2019
 output:
@@ -11,30 +11,19 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-I was an ODI Fellow between 2012-2014, which were two incredible years. I couldn't recommend the program more, though this opinion is not shared by all ex-Fellows. The inspiration for this blog post comes from one I read looking at the skills and backgrounds of data scientist. This blog does something similar for ODI Fellows.
+The Overseas Development Institute (ODI) Fellowship scheme posts junior economists to work in developing country governments. I was an ODI Fellow between 2012-2014, which were two incredible years. I wanted to explore who Fellows were, what they did prior to their Fellowships and what did they do after. In this blog post I look at the time prior; what did they study and what work experience did they have. 
 
-This will be the first of two posts. Here I examine what Fellows did prior to their Fellowship; what did they study and what work experience did they have. The second will focus on what Fellows did afterwards; what jobs did they get and in what organisations.
-
-Getting an ODI Fellowship is competitive. Every year there are about 50 places, in 2017 and 2018 there were 795 and 749 applicants respectively. This is an acceptance rate of about 6-7%. This is lower than for undergraduate study at Oxford, about 15%, and similar to Yale and Princeton, about 6.5%. None the less, in terms of applications, the Fellowship is less competitive than programs such as the World Bank YPP, which has an acceptance rate of less than 1%.
+Getting an ODI Fellowship is competitive. Every year there are about 50 places, in 2017 and 2018 there were 795 and 749 applicants respectively. This is an acceptance rate of about 6-7%. This is lower than for undergraduate study at Oxford, about 15%, and similar to Yale and Princeton, about 6.5%. The Fellowship is less competitive than programs such as the World Bank Young Professionals Program (YPP) which has an acceptance rate of less than 1%.
 
 <h1>The data</h1>
 
 Throughout I rely in publicly(-ish) avaliable data. The two data sources are the ODI Fellowship handbooks produced every year by ODI and data on individuals from LinkedIn. I wrote code to largely automate the data acquisition process, though such methods are not without [controversy](https://reason.com/2019/09/09/scraping-a-public-website-doesnt-violate-the-cfaa-ninth-circuit-mostly-holds/). 
 
-<aside>
-Each LinkedIn profile has multiple "records". My script identified the records most likely to be the ODI Fellowship. Where no such record could be found I dropped the individual from further analysis. 
-</aside>
-
 The Fellowship handbooks identify 419 individuals starting a Fellowship between 2011 and 2019. However, my web scrapper only pulled in data for 391  and my cleaning script only identified 242 of these having started a Fellowship. The majority of this analysis is on these 242 individuals. 
 
 <h1>What were people doing immediately prior to their Fellowship?</h1>
 
-The majority, 63%, were working while the remaining 37% report being in education. Of those in education every single person was completing their master's degree, no one reported to have completed their PHD immediately prior to starting a Fellowship. The interactive map below shows where Fellows were immediately prior to their Fellowship. 
-
-<aside>
-Location listed was geocoded using the Google API. Sometimes this wasn't very specific, such as “Australia”, which geocodes to the centre of Australia. 
-</aside>
-
+The majority, 63%, were working while the remaining 37% report being in education. Of those in education every single person was completing their master's degree. No one reported to have completed their PHD immediately prior to starting a Fellowship. The interactive map below shows where Fellows were immediately prior to their Fellowship. I encourage you to explore the map. The dominance of the UK as the place ODI draws Fellows from is clear.
 
 ```{r}
 library(leaflet)
@@ -50,7 +39,7 @@ m  # Print the map
 
 <h1>Where did Fellows study?</h1>
 
-The ODI Fellowship handbooks provide data on the universities attended by Fellows typically for their masters. There are 82 universities represented in total. However, 68% of Fellows studied at just ten universities. The graph below shows the number of Fellows from the top 16 universities as well as showing the relative dominance of just three; LSE, Oxford and SOAS. 
+The ODI Fellowship handbooks provide data on the universities attended by Fellows typically for their masters. There are 82 universities represented in total. However, 68% of Fellows studied at just ten universities. The graph below shows the number of Fellows from the top 16 universities as well as showing the relative dominance of just three; LSE, Oxford and SOAS (43% of Fellows).
 
 ```{r}
 library(ggplot2)
@@ -66,9 +55,9 @@ ggplot(University) + geom_col(aes(x=reorder(University,-Uni),y=Uni))  + xlab("Ye
 
 ```
 
-If you are considering where to do your masters and really want a Fellowship, then you should study at LSE, Oxford or SOAS. 
+If you are considering where to do your masters and really want a Fellowship then you should study at LSE, Oxford or SOAS. 
 
-While a masters is neccesary only 1.5% of Fellows had completed their PHD prior to starting their ODI Fellowship. Individuals with PHDs either don't apply or don't get accepeted, either way if you are currently completing or have a PHD then successfully applying for an ODI Fellowship would put you in the minority. 
+While a masters is neccesary, only 1.5% of Fellows had completed their PHD prior to starting their ODI Fellowship. Individuals with PHDs either don't apply or don't get accepted. Either way if you are currently completing or have a PHD then successfully applying for an ODI Fellowship would put you in the minority. 
 
 <h2>What did Fellows study?</h2>
 
@@ -76,7 +65,7 @@ Most Fellows report what they studied both at Bachelors and at Masters, both of 
 
 <h3>Bachelors </h3>
 
-The graph below shows the field of study for bachelor's degrees obtained by Fellows. The vast majority of Fellows did straight Economics or Economics combined with something else (e.g. 'Economics and Politics' or 'Economics with Finance').
+The graph below shows the field of study for bachelor's degrees obtained by Fellows. The vast majority of Fellows did straight Economics or Economics combined with something else (e.g. 'Economics and Politics' or 'Economics with Finance'). These two categories combined make up 79% of Fellow's bachelors degrees. 
 
 ```{r}
 library(knitr)
@@ -115,7 +104,8 @@ ggplotly(G, tooltip = c("Subject", "Percentage")) %>% layout(legend = list(orien
 
 <h3>Masters</h3>
 
-There were a wider diversity of master's course titles, I have encoded these slightly differently. Straight Economics masters and Development Economics are the majority.
+There were a wider diversity of master's course titles. I have encoded these slightly differently. Development Economics was popular and was studied by 33% of Fellows for their masters. Pure economics masters were also popular and were studied by 30% of Fellows.  
+
 
 ```{r}
 library(knitr)
@@ -188,9 +178,9 @@ kable(Mgrade)
 
 <h1>Did Fellows report having work experience?</h1>
 
-In short, not all. Apart from internships (and some waitering) I did not have any work experience to speak of when I applied, nor do I list any work experience prior to my Fellowship on my LinkedIn. That puts me in a minority, only 11 (5%) of individuals list no work experience on their LinkedIn profile prior to their Fellowship. 
+In short, not all. Apart from internships (and some waitering) I did not have any work experience to speak of when I applied, nor do I list any work experience prior to my Fellowship on my LinkedIn. That puts me in a minority. Only 11 (5%) individuals list no work experience on their LinkedIn profile prior to their Fellowship. 
 
-The histogram below shows the amount of work experience prior to starting a Fellowship. The mean amount of work experience reported was 2.7 years and the median 2.2 years, suggesting that ODI's description of the scheme as picking "early career" economists is accurate. 
+The histogram below shows the amount of work experience prior to starting a Fellowship. The mean amount of work experience reported was 2.7 years and the median 2.2 years. This suggests that ODI's description of the scheme as picking "early career" economists is accurate. 
 
 ```{r}
 library(ggplot2)
@@ -205,7 +195,9 @@ ggplot(data = XPYears) + geom_histogram(aes(TotalYearsMinusDiff), binwidth =  1,
 
 <h2>Where were Fellow's working immediately prior to their Fellowship?</h2>
 
-Categorising the large variety of titles and workplaces took a bit of judgement. The most common job title was "Consultant", but this was only used by 7% of people. Variations on "Consultant" such as "Economic Consultant" made up 19%. I have also included some examples of the job titles captured under each category.
+Categorising the large variety of titles and workplaces took a bit of judgement. The most common job title was "Consultant", but this was only used by 7% of people. Variations on "Consultant" such as "Economic Consultant" made up 19%. The table below shows the results of this analysis. It includes some examples of job titles found in the data. 
+
+There is a pretty even split across the types of workplaces at least in the way I categorised them. The largest categories being private sector companies and universities.  
 
 <h3>Job titles</h3>
 
