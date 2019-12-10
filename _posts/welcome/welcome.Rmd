@@ -2,11 +2,6 @@
 title: "Welcome to Island Economist"
 description: |
   Welcome to my new blog, Island Economist. 
-author:
-  - name: a 
-    url: a
-    affiliation: a
-    affiliation_url: a
 date: 11-22-2019
 output:
   distill::distill_article:
