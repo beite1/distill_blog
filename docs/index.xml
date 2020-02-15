@@ -7,7 +7,15 @@
     <description>Island Economist
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Tue, 26 Nov 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Tips for becoming an ODI Fellow (Part 2)</title>
+      <link>https://www.islandeconomist.com/posts/2020-01-16-tips-for-becoming-an-odi-fellow-part-2</link>
+      <description>An analysis of the data</description>
+      <guid>https://www.islandeconomist.com/posts/2020-01-16-tips-for-becoming-an-odi-fellow-part-2</guid>
+      <pubDate>Wed, 15 Jan 2020 00:00:00 +0000</pubDate>
+      <media:content url="https://www.islandeconomist.com/posts/2020-01-16-tips-for-becoming-an-odi-fellow-part-2/tips-for-becoming-an-odi-fellow-part-2_files/figure-html5/unnamed-chunk-1-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
     <item>
       <title>Tips for becoming an ODI Fellow</title>
       <link>https://www.islandeconomist.com/posts/2019-11-26-so-you-want-to-be-fellow</link>
@@ -21,7 +29,7 @@
       <link>https://www.islandeconomist.com/posts/welcome</link>
       <description>Welcome to my new blog, Island Economist.</description>
       <guid>https://www.islandeconomist.com/posts/welcome</guid>
-      <pubDate>Thu, 21 Nov 2019 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 22 Nov 2019 00:00:00 +0000</pubDate>
     </item>
   </channel>
 </rss>
