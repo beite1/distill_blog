@@ -1,5 +1,15 @@
 [
   {
+    "path": "posts/2021-03-07-pension-funds-in-pacific-islands/",
+    "title": "Pension funds in Pacific Islands",
+    "description": "An analysis of the accounts",
+    "author": [],
+    "date": "2021-03-07",
+    "categories": [],
+    "preview": {},
+    "last_modified": "2021-03-08T09:32:58+11:00"
+  },
+  {
     "path": "posts/2020-10-25-covid-19-cases-in-sydney/",
     "title": "COVID-19 cases in Sydney",
     "description": "Analysis using gganimate",
