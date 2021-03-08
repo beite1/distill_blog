@@ -13,12 +13,24 @@ library(dplyr)
 library(ggplot2)
 library(plotly)
 library(magrittr)
+library(tippy)
 ```
 
-Last year I helped deliver a project for the IFC and members of the Pacific Island Investment Forum (PIIF). The PIIF is an association of funds across the Pacific, including provident, superannuation, sovereign and trust funds. Examples include the Vanuatu National Provident Fund (VNPF) and the Fiji National Provident Fund (FNPF). In many Pacific Island nations they represent the largest domestic asset owner and investor. The project got me interested in understanding their role further, so I did what feels natural and started looking for data. Also, this is the Island Economist blog so lets talk about some island institutions!
+Last year I helped deliver a project for the IFC and members of the Pacific Island Investment Forum (PIIF). The PIIF is an association of funds across the Pacific, including provident, superannuation, sovereign and trust funds. Examples include the Vanuatu National Provident Fund (VNPF) and the Fiji National Provident Fund (FNPF). In many Pacific Island nations they represent the largest domestic asset owner and investor and collectively have over $USD 8 billion under management. The project got me interested in understanding their role further, so I did what feels natural and started looking for data. 
 
-The data I eventually found was in the financial accounts. As far as I can tell no has ever attempted to extract this data and undertake analysis. Which doesn't surprise me, the data is held in pdfs and in some cases scanned pdfs. The effort required to extract the data was substantial and mostly manual. If any of the following analysis is incorrect its likely that I mis-typed a number. Of the 16 PIIF members this analysis only covers 9 where I was able to compile enough data. 
+Also, this is the Island Economist blog so lets talk about some island institutions!
 
+The data I eventually found was in the financial accounts. As far as I can tell no one has ever attempted to extract this data and undertake analysis. Which doesn't surprise me, the data is held in pdfs and in some cases scanned pdfs. The effort required to extract the data was substantial and mostly manual. If any of the following analysis is incorrect its likely that I mis-typed a number.
+
+<u>
+```{r}
+tippy("Of the 16 PIIF members this analysis only covers 9 where I was able to compile enough data.
+     
+       ", tooltip = "The 9 members are: Cook Islands National Superannuation Fund (CI), Fiji National Provident Fund (FNPF), PNG - Nambawan Super, PNG - Nasfund, Solomon Islands National Provident Fund (SINPF), Samoa National Provident Fund (SNPF), Tuvalu National Provident Fund (TNPF), Tonga Retirement Fund Board (TNRBF) and Vanuatu National Provident Fund (VNPF)")
+
+tippy_this('testing this',"fjsdkfjsdfkj")
+```
+</u>
 The question I asked of the data was if I had $10,000 to invest into one of these institutions would I do it?
 
 There are three ways of thinking about this problem: risk, return and fees.
@@ -61,13 +73,13 @@ plot_ly(marker = list(size = 20)) %>%
            ) %>%
   layout(showlegend = FALSE,
          xaxis = list(title = "Standard deviation of returns",range = c(0, 20)),
-         yaxis = list(title = "Arithmetic mean real returns",range = c(-1, 10))) %>%
+         yaxis = list(title = "Arithmetic mean real returns",range = c(-1.1, 10))) %>%
   config(displayModeBar = FALSE)  %>% 
   layout(
     updatemenus = list(
       list(
         type = "buttons",
-        y = 10,
+        y = 10, 
         buttons = list(
           
           list(method = "restyle",
