@@ -78,9 +78,10 @@ plot_ly(marker = list(size = 20)) %>%
   layout(
     updatemenus = list(
       list(
+         pad = list('r' = 50),
         type = "buttons",
         y = 10, 
-        buttons = list(
+                buttons = list(
           
           list(method = "restyle",
                args = list("visible", c(F,T)),
