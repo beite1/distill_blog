@@ -39,7 +39,7 @@ There are three ways of thinking about this problem: risk, return and fees.
 
 I first wanted to understand the returns these funds achieve. I estimated annual real returns by looking at the change in net assets every year. Net assets were adjusted for net member fund movements. Individuals make contributions to these funds and they also make withdrawals (usually when they hit retirement age). If member contributions are greater than withdrawals then without an adjustment returns will look higher. I also adjusted all figures for CPI inflation of the country the fund is located in to ensure comparability.
 
-The figure below shows the arithmetic mean annual real return and standard deviation for each of the funds. Standard deviation is a measure of volatility and by extension risk. There seems to be three general groupings. Two high performers (Cook Islands and Solomon Islands), a group in the middle and two low performers (Vanuatu and Tonga). 
+The figure below shows the arithmetic mean annual real return and standard deviation for each of the funds. Standard deviation is a measure of volatility and by extension risk. There seems to be three general groupings. Two high performers (Cook Islands - CI and Solomon Islands - SINPF), a group in the middle and two low performers (Vanuatu - VNPF and Tonga - TNRBF). It is however worth highlighting that SINPF's performance is driven by a large increase in the value of unlisted equity in 2013. I haven't been able to establish exactly what occured in that year. 
 
 ```{r}
 PlotlyData <- read.csv("C:\\Users\\Benjamin\\Desktop\\Blog\\Analyst\\PIIF\\FullReturnData.csv", header = TRUE, stringsAsFactors = FALSE)
